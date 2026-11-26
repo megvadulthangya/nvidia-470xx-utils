@@ -1,0 +1,83 @@
+From 6837af723517c9352ec197cbfb04deedce5c76b2 Mon Sep 17 00:00:00 2001
+From: Andreas Beckmann <anbe@debian.org>
+Date: Sun, 6 Sep 2026 22:11:07 +0200
+Subject: [PATCH] backport strncpy changes from 580.178.04
+
+---
+ nvidia-modeset/nvidia-modeset-linux.c | 5 +++++
+ nvidia/linux_nvswitch.c               | 6 +++++-
+ nvidia/os-interface.c                 | 7 +++++++
+ 3 files changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/nvidia-modeset/nvidia-modeset-linux.c b/nvidia-modeset/nvidia-modeset-linux.c
+index 027e51bf..55214e35 100644
+--- a/nvidia-modeset/nvidia-modeset-linux.c
++++ b/nvidia-modeset/nvidia-modeset-linux.c
+@@ -8,6 +8,7 @@
+  * _NVRM_COPYRIGHT_END_
+  */
+ 
++#include <linux/version.h>
+ #include <linux/module.h>
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+@@ -389,7 +390,11 @@ int nvkms_strcmp(const char *s1, const char *s2)
+ 
+ char* nvkms_strncpy(char *dest, const char *src, size_t n)
+ {
++#if LINUX_VERSION_CODE < KERNEL_VERSION(7,2,0)
+     return strncpy(dest, src, n);
++#else
++    return memcpy(dest, src, n);
++#endif
+ }
+ 
+ void nvkms_usleep(NvU64 usec)
+diff --git a/nvidia/linux_nvswitch.c b/nvidia/linux_nvswitch.c
+index 6974085e..400e464e 100644
+--- a/nvidia/linux_nvswitch.c
++++ b/nvidia/linux_nvswitch.c
+@@ -2012,7 +2012,7 @@ nvswitch_os_read_registry_dword
+         return -NVL_ERR_GENERIC;
+     }
+ 
+-    strncpy(regkey_val, regkey_val_start, regkey_val_len);
++    memcpy(regkey_val, regkey_val_start, regkey_val_len);
+     regkey_val[regkey_val_len] = '\0';
+ 
+     if (nvswitch_os_strtouint(regkey_val, data) != 0)
+@@ -2328,7 +2328,11 @@ nvswitch_os_strncpy
+     NvLength length
+ )
+ {
++#if LINUX_VERSION_CODE < KERNEL_VERSION(7,2,0)
+     return strncpy(dest, src, length);
++#else
++    return memcpy(dest, src, length);
++#endif
+ }
+ 
+ int
+diff --git a/nvidia/os-interface.c b/nvidia/os-interface.c
+index 91911b62..799b5a14 100644
+--- a/nvidia/os-interface.c
++++ b/nvidia/os-interface.c
+@@ -645,8 +645,15 @@ NvU32 NV_API_CALL os_get_current_process(void)
+ void NV_API_CALL os_get_current_process_name(char *buf, NvU32 len)
+ {
+     task_lock(current);
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 3, 0)
+     strncpy(buf, current->comm, len - 1);
+     buf[len - 1] = '\0';
++#else
++    if (strscpy(buf, current->comm, len) < 0) {
++        // strscpy() returns -E2BIG on truncation, which is acceptable here.
++    }
++#endif
++
+     task_unlock(current);
+ }
+ 
+-- 
+2.39.5
+

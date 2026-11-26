@@ -1,0 +1,44 @@
+From 515a2714463bc9a11a30ccd72a4c7d88426ca6b1 Mon Sep 17 00:00:00 2001
+From: Andreas Beckmann <anbe@debian.org>
+Date: Sat, 12 Sep 2026 04:21:38 +0200
+Subject: [PATCH] backport MODULE_DESCRIPTION changes from 580.159.03
+
+---
+ nvidia-drm/nvidia-drm-linux.c         | 1 +
+ nvidia-modeset/nvidia-modeset-linux.c | 1 +
+ nvidia/nv-frontend.c                  | 1 +
+ 3 files changed, 3 insertions(+)
+
+diff --git a/nvidia-drm/nvidia-drm-linux.c b/nvidia-drm/nvidia-drm-linux.c
+index 94e463e9..ef4949d3 100644
+--- a/nvidia-drm/nvidia-drm-linux.c
++++ b/nvidia-drm/nvidia-drm-linux.c
+@@ -195,3 +195,4 @@ module_exit(nv_linux_drm_exit);
+ #if defined(MODULE_VERSION)
+   MODULE_VERSION(NV_VERSION_STRING);
+ #endif
++MODULE_DESCRIPTION("NVIDIA DRM kernel module");
+diff --git a/nvidia-modeset/nvidia-modeset-linux.c b/nvidia-modeset/nvidia-modeset-linux.c
+index 55214e35..f1a4bd7d 100644
+--- a/nvidia-modeset/nvidia-modeset-linux.c
++++ b/nvidia-modeset/nvidia-modeset-linux.c
+@@ -1810,3 +1810,4 @@ module_exit(nvkms_exit);
+ #if defined(MODULE_VERSION)
+   MODULE_VERSION(NV_VERSION_STRING);
+ #endif
++MODULE_DESCRIPTION("NVIDIA modeset kernel module");
+diff --git a/nvidia/nv-frontend.c b/nvidia/nv-frontend.c
+index 4f4ba241..e108ad02 100644
+--- a/nvidia/nv-frontend.c
++++ b/nvidia/nv-frontend.c
+@@ -26,6 +26,7 @@ MODULE_INFO(supported, "external");
+ #if defined(MODULE_VERSION)
+ MODULE_VERSION(NV_VERSION_STRING);
+ #endif
++MODULE_DESCRIPTION("NVIDIA core GPU kernel module");
+ 
+ #ifdef MODULE_ALIAS_CHARDEV_MAJOR
+ MODULE_ALIAS_CHARDEV_MAJOR(NV_MAJOR_DEVICE_NUMBER);
+-- 
+2.39.5
+

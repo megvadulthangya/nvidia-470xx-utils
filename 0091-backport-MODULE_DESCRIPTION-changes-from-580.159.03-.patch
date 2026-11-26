@@ -1,0 +1,23 @@
+From 81e1577b44d7313de3f0ac3e6e1e54a2a8526731 Mon Sep 17 00:00:00 2001
+From: Andreas Beckmann <anbe@debian.org>
+Date: Sat, 12 Sep 2026 04:21:38 +0200
+Subject: [PATCH] backport MODULE_DESCRIPTION changes from 580.159.03 (uvm
+ part)
+
+---
+ nvidia-uvm/uvm.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/nvidia-uvm/uvm.c b/nvidia-uvm/uvm.c
+index 317b3953..931eca5f 100644
+--- a/nvidia-uvm/uvm.c
++++ b/nvidia-uvm/uvm.c
+@@ -1131,4 +1131,5 @@ module_exit(uvm_exit_entry);
+ 
+ MODULE_LICENSE("Dual MIT/GPL");
+ MODULE_INFO(supported, "external");
++MODULE_DESCRIPTION("NVIDIA Unified Virtual Memory kernel module");
+ 
+-- 
+2.39.5
+
