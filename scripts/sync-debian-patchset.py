@@ -74,7 +74,20 @@ def shell_array_tokens(body: str, description: str) -> list[str]:
 
 
 def array_pattern(variable: str) -> re.Pattern[str]:
-    return re.compile(rf"(?ms)^{re.escape(variable)}=\((.*?)^\)")
+    """Match a Bash array closed either on its own line or after its last item.
+
+    Both forms are valid in PKGBUILD files:
+
+        sha256sums=(\n            '...'
+        )
+
+        sha256sums=(\n            '...')
+
+    The closing parenthesis must be the last non-comment character on its line.
+    """
+    return re.compile(
+        rf"(?ms)^{re.escape(variable)}=\((.*?)(?:\)[ \t]*(?:\#.*)?$)"
+    )
 
 
 def replace_array_block(text: str, variable: str, replacement: str) -> str:
