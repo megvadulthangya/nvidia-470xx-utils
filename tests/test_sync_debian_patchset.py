@@ -15,17 +15,26 @@ SYNC = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(SYNC)
 
 
-def make_pkgbuild(static_source_count: int = 8, old_checksum_count: int = 99) -> str:
+def make_pkgbuild(
+    static_source_count: int = 8,
+    old_checksum_count: int = 99,
+    inline_checksum_close: bool = False,
+) -> str:
     static_sources = [f"'static-source-{i}.conf'" for i in range(static_source_count - 1)]
     static_sources.insert(0, "'series.resolved'")
     source_body = "\n".join(f"    {item}" for item in static_sources)
     checksum_body = "\n".join(f"    'old-hash-{i}'" for i in range(old_checksum_count))
+    checksum_block = (
+        f"sha256sums=(\n{checksum_body})\n"
+        if inline_checksum_close
+        else f"sha256sums=(\n{checksum_body}\n)\n"
+    )
     return (
         "# Átírva: Debian 340xx/main patch-sorozat használatára (87 patch).\n"
         "pkgbase=nvidia-test\n"
         "_debian_patches=(\n    old.patch\n)\n"
         f"source=(\n{source_body}\n    \"${{_debian_patches[@]}}\"\n)\n"
-        f"sha256sums=(\n{checksum_body}\n)\n"
+        f"{checksum_block}"
     )
 
 
@@ -60,6 +69,14 @@ class PkgbuildChecksumTests(unittest.TestCase):
         patches = [f"patch-{i:03}.patch" for i in range(83)]
         updated = SYNC.update_pkgbuild(make_pkgbuild(11, 100), patches)
         self.assert_all_skip(updated, 94)
+
+    def test_470xx_inline_checksum_closing_parenthesis(self) -> None:
+        patches = [f"patch-{i:03}.patch" for i in range(57)]
+        original = make_pkgbuild(12, 73, inline_checksum_close=True)
+        updated = SYNC.update_pkgbuild(original, patches)
+        self.assert_all_skip(updated, 69)
+        self.assertIn("sha256sums=(\n", updated)
+        self.assertTrue(updated.rstrip().endswith(")"))
 
     def test_reorders_removals_and_is_idempotent(self) -> None:
         original = make_pkgbuild(8, 95)
