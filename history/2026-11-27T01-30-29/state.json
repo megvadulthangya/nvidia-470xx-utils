@@ -1,0 +1,96 @@
+{
+  "builds": {
+    "470xx/normal/linux-next-nvidia-470xx": {
+      "clean_total": 1,
+      "clean_uniq": 1,
+      "err_count": 71,
+      "noise_total": 0,
+      "status": "failed",
+      "suspicious_total": 0
+    },
+    "470xx/normal/linux61-nvidia-470xx": {
+      "clean_total": 0,
+      "clean_uniq": 0,
+      "err_count": 0,
+      "noise_total": 157265,
+      "status": "clean",
+      "suspicious_total": 0
+    },
+    "470xx/normal/linux612-nvidia-470xx": {
+      "clean_total": 0,
+      "clean_uniq": 0,
+      "err_count": 0,
+      "noise_total": 63696,
+      "status": "clean",
+      "suspicious_total": 0
+    },
+    "470xx/normal/linux618-nvidia-470xx": {
+      "clean_total": 1,
+      "clean_uniq": 1,
+      "err_count": 0,
+      "noise_total": 63696,
+      "status": "warnings",
+      "suspicious_total": 0
+    },
+    "470xx/normal/linux66-nvidia-470xx": {
+      "clean_total": 0,
+      "clean_uniq": 0,
+      "err_count": 0,
+      "noise_total": 63696,
+      "status": "clean",
+      "suspicious_total": 0
+    },
+    "470xx/normal/linux73-nvidia-470xx": {
+      "clean_total": 1,
+      "clean_uniq": 1,
+      "err_count": 0,
+      "noise_total": 63696,
+      "status": "warnings",
+      "suspicious_total": 0
+    },
+    "470xx/normal/linux74-nvidia-470xx": {
+      "clean_total": 1,
+      "clean_uniq": 1,
+      "err_count": 0,
+      "noise_total": 63696,
+      "status": "warnings",
+      "suspicious_total": 0
+    },
+    "470xx/rt/linux61-rt-nvidia-470xx": {
+      "clean_total": 0,
+      "clean_uniq": 0,
+      "err_count": 0,
+      "noise_total": 157265,
+      "status": "clean",
+      "suspicious_total": 0
+    },
+    "470xx/rt/linux612-rt-nvidia-470xx": {
+      "clean_total": 0,
+      "clean_uniq": 0,
+      "err_count": 0,
+      "noise_total": 63696,
+      "status": "clean",
+      "suspicious_total": 0
+    },
+    "470xx/rt/linux66-rt-nvidia-470xx": {
+      "clean_total": 0,
+      "clean_uniq": 0,
+      "err_count": 0,
+      "noise_total": 63696,
+      "status": "clean",
+      "suspicious_total": 0
+    }
+  },
+  "clean_signatures": {
+    "warning: ignoring return value of 'refcount_sub_and_test' declared with attribute 'warn_unused_result' [-Wunused-result]": {
+      "builds": [
+        "470xx/normal/linux-next-nvidia-470xx",
+        "470xx/normal/linux618-nvidia-470xx",
+        "470xx/normal/linux73-nvidia-470xx",
+        "470xx/normal/linux74-nvidia-470xx"
+      ],
+      "hits": 4
+    }
+  },
+  "timestamp": "2026-11-27T01-30-29"
+}

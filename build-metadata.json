@@ -1,0 +1,64 @@
+{
+  "driver_family": "470xx",
+  "source_repository": "megvadulthangya/nvidia-470xx-utils",
+  "source_branch": "debian-state",
+  "source_sha": "cf7e645632420668a182ce0c584041aadff75ced",
+  "kernel_repository": "megvadulthangya/nvidia-470xx",
+  "kernel_branch": "develop",
+  "manjaro_branch": "testing",
+  "utils_pkgver": "470.256.02",
+  "utils_pkgrel": "1",
+  "kernel_matrix": [
+    {
+      "kernel": "linux-next",
+      "variant": "normal",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    },
+    {
+      "kernel": "linux61",
+      "variant": "normal",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    },
+    {
+      "kernel": "linux61-rt",
+      "variant": "rt",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    },
+    {
+      "kernel": "linux612",
+      "variant": "normal",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    },
+    {
+      "kernel": "linux612-rt",
+      "variant": "rt",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    },
+    {
+      "kernel": "linux618",
+      "variant": "normal",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    },
+    {
+      "kernel": "linux66",
+      "variant": "normal",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    },
+    {
+      "kernel": "linux66-rt",
+      "variant": "rt",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    },
+    {
+      "kernel": "linux73",
+      "variant": "normal",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    },
+    {
+      "kernel": "linux74",
+      "variant": "normal",
+      "package": "${_linuxprefix}-nvidia-470xx"
+    }
+  ],
+  "run_started_utc": "2026-11-27T01:04:56.812488+00:00"
+}
